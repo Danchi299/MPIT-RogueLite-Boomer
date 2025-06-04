@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ep3vm38ut24k"]
+
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_kdfxv"]
+[ext_resource type="PackedScene" uid="uid://bhadow1oj56nf" path="res://Scenes/Menu.tscn" id="2_s8qps"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kdfxv")
+
+[node name="Game" parent="." instance=ExtResource("2_s8qps")]
+
+[node name="Sounds" type="Node2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="Effects" type="Node2D" parent="."]
+position = Vector2(-1, 0)

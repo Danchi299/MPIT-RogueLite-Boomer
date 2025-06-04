@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bds7manoukkad"]
+
+[node name="Navigation" type="NavigationAgent2D"]
+path_desired_distance = 0.1
+avoidance_enabled = true
+max_speed = 1000.0
+debug_path_custom_line_width = 1.0

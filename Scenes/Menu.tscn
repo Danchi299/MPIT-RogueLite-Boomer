@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhadow1oj56nf"]
+
+[ext_resource type="Texture2D" uid="uid://c88w8bwwbu1ax" path="res://Sprites/Menu.png" id="1_s7vgw"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-13, 2.00002)
+scale = Vector2(5.625, 5.625)
+texture = ExtResource("1_s7vgw")

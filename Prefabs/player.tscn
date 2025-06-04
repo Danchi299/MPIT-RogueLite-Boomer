@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://cge7vsxhybi62"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_0abfb"]
+[ext_resource type="Shader" path="res://Resources/Flash.gdshader" id="2_447kq"]
+[ext_resource type="SpriteFrames" uid="uid://dxkdosb0dnttc" path="res://Sprites/Sheets/Barrel.tres" id="3_b4w5a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks4mb"]
+bounce = 1.0
+
+[sub_resource type="Animation" id="Animation_o2582"]
+resource_name = "Flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/AnimatedSprite:material:shader_parameter/white_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_h1b5x"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/AnimatedSprite:material:shader_parameter/white_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vamyy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/AnimatedSprite:material:shader_parameter/white_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hmqei"]
+_data = {
+"Flash": SubResource("Animation_o2582"),
+"Idle": SubResource("Animation_h1b5x"),
+"RESET": SubResource("Animation_vamyy")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1a6p1"]
+shader = ExtResource("2_447kq")
+shader_parameter/white_progress = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2h3xa"]
+radius = 6.0
+
+[node name="Player" type="RigidBody2D"]
+position = Vector2(-110, -2)
+physics_material_override = SubResource("PhysicsMaterial_ks4mb")
+linear_damp = 3.0
+script = ExtResource("1_0abfb")
+
+[node name="Flash" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_hmqei")
+}
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(0, -1)
+zoom = Vector2(2, 2)
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_1a6p1")
+sprite_frames = ExtResource("3_b4w5a")
+animation = &"Idle"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2h3xa")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)

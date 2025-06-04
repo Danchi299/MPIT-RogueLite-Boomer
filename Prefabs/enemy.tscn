@@ -1,0 +1,108 @@
+[gd_scene load_steps=10 format=3 uid="uid://cjlnafgvtlhtj"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_jsws4"]
+[ext_resource type="SpriteFrames" uid="uid://di1boa3ifuids" path="res://Sprites/Sheets/Bat.tres" id="2_hvs87"]
+[ext_resource type="PackedScene" uid="uid://bds7manoukkad" path="res://Prefabs/navigation.tscn" id="3_lduqb"]
+
+[sub_resource type="Animation" id="Animation_5k2lq"]
+resource_name = "Hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5708, 3.14159, 4.71239, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:material:shader_parameter/white_progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2ddxn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:material:shader_parameter/white_progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8ryo"]
+_data = {
+"Hurt": SubResource("Animation_5k2lq"),
+"RESET": SubResource("Animation_2ddxn")
+}
+
+[sub_resource type="Shader" id="Shader_ic71e"]
+code = "shader_type canvas_item;
+
+uniform float white_progress : hint_range(0,1) = 0;
+
+vec3 interpolate_vec3(vec3 start, vec3 end, float delta){
+    return start + (end - start) * delta;
+}
+
+void fragment(){
+    vec4 origin = texture(TEXTURE, UV);
+    COLOR.rgb = interpolate_vec3(origin.rgb, vec3(1,1,1), white_progress);
+    COLOR.a = origin.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_02w5n"]
+resource_local_to_scene = true
+shader = SubResource("Shader_ic71e")
+shader_parameter/white_progress = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hu45q"]
+radius = 6.0
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(19, 75)
+script = ExtResource("1_jsws4")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_a8ryo")
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_02w5n")
+sprite_frames = ExtResource("2_hvs87")
+animation = &"Walk"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hu45q")
+
+[node name="Navigation" parent="." instance=ExtResource("3_lduqb")]

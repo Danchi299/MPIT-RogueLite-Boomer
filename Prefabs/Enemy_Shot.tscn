@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://de4lakbv8e1c6"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy_Shot.gd" id="1_kns3r"]
+[ext_resource type="Texture2D" uid="uid://b0oib3u677ppx" path="res://Sprites/EShot.png" id="2_8c341"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u7n6y"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hiapp"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u27ab"]
+radius = 5.0
+
+[node name="Shot" type="RigidBody2D"]
+position = Vector2(-184, 56)
+physics_material_override = SubResource("PhysicsMaterial_u7n6y")
+script = ExtResource("1_kns3r")
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Area"]
+position = Vector2(-1, 1)
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_hiapp")
+debug_color = Color(0.996078, 0, 0.188235, 0.419608)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_8c341")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u27ab")
+
+[node name="Obstacle" type="NavigationObstacle2D" parent="."]

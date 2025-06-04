@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwy4u7h73vcwx"]
+
+[ext_resource type="TileSet" uid="uid://cc4dr1whx8tc4" path="res://Sprites/Sheets/Dungeon.tres" id="1_p7n7n"]
+[ext_resource type="PackedScene" uid="uid://cv75vrsdg4oso" path="res://Prefabs/exit.tscn" id="2_uylbd"]
+[ext_resource type="PackedScene" uid="uid://cge7vsxhybi62" path="res://Prefabs/player.tscn" id="3_vg24k"]
+[ext_resource type="Texture2D" uid="uid://smlqctndjgxh" path="res://Sprites/TEMP/КАРТА - 2.png" id="4_ulg3m"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Floor" type="TileMap" parent="."]
+tile_set = ExtResource("1_p7n7n")
+format = 2
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource("1_p7n7n")
+format = 2
+
+[node name="Exit" parent="." instance=ExtResource("2_uylbd")]
+
+[node name="Player" parent="." instance=ExtResource("3_vg24k")]
+position = Vector2(-190, 160)
+
+[node name="Enemies" type="Node2D" parent="."]
+position = Vector2(106, -57)
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Bombs" type="Node2D" parent="Projectiles"]
+
+[node name="Layout" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(3, -70)
+texture = ExtResource("4_ulg3m")
