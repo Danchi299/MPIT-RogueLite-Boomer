@@ -1,7 +1,7 @@
 extends Node
 
-var BOMB_LIMIT  = 99
-var BOMB_RADIUS = 50
+var BOMB_LIMIT  = 3
+var BOMB_RADIUS = 30
 
 @onready var tree = get_tree()
 @onready var root = tree.get_root()
@@ -35,4 +35,3 @@ func PlaySound(name, volume=0):
 func AddEffect(Effect): main.get_node("Effects").add_child(Effect)
 func AddProj(Proj): game.get_node("Projectiles").add_child(Proj)
 	
-
